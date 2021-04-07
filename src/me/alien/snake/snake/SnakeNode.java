@@ -6,20 +6,40 @@ import me.alien.snake.Game;
 
 public class SnakeNode {
 
-    SnakeNode childNode;
+    SnakeNode childNode=null;
     private int size;
+    private int id;
     private Rectangle bodyPice;
 
-    public SnakeNode(int size, SnakeNode childNode) {
-        this.childNode=childNode;
+    public SnakeNode(int size, int lenth, int id) {
         this.size=size;
-        bodyPice=new Rectangle(Game.getHightA()/2-5, Game.getWidthA()/2-5, size, size);
+        this.id=id;
+        System.out.println("nodes left "+lenth+". This node has id "+id);
+        bodyPice=new Rectangle(0, 0, size, size);
+        if(lenth > 0){
+            childNode = new SnakeNode(size, lenth-1, id+1);
+        }
     }
 
-    public void move(int x, int y){
+    public boolean move(int x, int y, Graphics2D g2d){
+        //System.out.println("Moving node whit id "+id);
+        int gameWidth = Game.getWidthA();
+        int gameHight = Game.getHightA();
+        boolean outMaxX = x > (gameWidth-size);
+        boolean outMaxY = y > (gameHight-size);
+        boolean outMinX = x < 0;
+        boolean outMinY = y < 0;
+        if(outMaxX|| outMaxY || outMinX || outMinY){
+            System.out.println("Invalid/eligel move trying to move node "+id+" out side of the map");
+            return false;
+        }
         int x1 = bodyPice.x, y1=bodyPice.y;
         bodyPice.setLocation(x, y);
-        childNode.move(x1, y1);
+        g2d.fill(bodyPice);
+        if(childNode!=null){
+            childNode.move(x1, y1, g2d);
+        }
+        return true;
     }
 
     public int getHeight(){return bodyPice.height;}

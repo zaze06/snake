@@ -20,7 +20,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final String VERSION = "dev.0.1.1";
+    private static final String VERSION = "dev.0.2";
 
     private static int hight = 0;
     private int DELAY = 100;
@@ -29,6 +29,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private static Timer timer;
 
     Snake snake = new Snake(3,10);
+
+    private int pressedKey = KeyMode.RIGHT;
 
     public static int getHightA(){return hight;}
     public static int getWidthA(){return width;}
@@ -56,9 +58,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         width = getWidth();
 
         Graphics2D g2d = (Graphics2D) g;
+        g2d.fillRect(0, 0, width, hight);
         g2d.setColor(new ColorUIResource(0, 200, 100));
         
-        snake.move(KeyMode.UP);
+        if(!snake.move(pressedKey, g2d)){
+            timer.stop();
+            return;
+        }
     }
 
     @Override
@@ -73,7 +79,18 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            pressedKey = KeyMode.UP;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            pressedKey = KeyMode.DOWN;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            pressedKey = KeyMode.LEFT;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            pressedKey = KeyMode.RIGHT;
+        }
     }
 
     @Override
