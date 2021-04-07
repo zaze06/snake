@@ -2,6 +2,7 @@ package me.alien.snake.snake;
 
 import java.awt.Graphics2D;
 
+import me.alien.snake.Game;
 import me.alien.snake.util.Modes;
 
 public class Snake {
@@ -35,6 +36,9 @@ public class Snake {
     public void add(){
         lenth++;
         head.add();
+        if(lenth==((Game.getHightA()/10)*(Game.getWidthA()/10))){
+            Game.gameState= Modes.GameStates.VICTORY;
+        }
     }
 
     public int getLenth() {
