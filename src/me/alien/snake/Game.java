@@ -32,6 +32,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     Color appelColor = new ColorUIResource(231, 42, 42);
     Color backGroundColor = new ColorUIResource(97, 142, 114);
     Color snakeColor = new ColorUIResource(67, 198, 50);
+    Color textColor = new ColorUIResource(23, 127, 106);
 
     private int pressedKey = Modes.Key.RIGHT;
 
@@ -105,7 +106,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             g2d.setColor(snakeColor);
 
             if(!snake.move(pressedKey, g2d)){
-                timer.stop();
+                //timer.stop();
                 return;
             }
         }else if(gameState == Modes.GameStates.NOT_STARTED){
