@@ -97,6 +97,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
 
         if(gameState == Modes.GameStates.DIED){
+            g2d.setColor(textColor);
             g2d.drawString("You Died.\nYou score :"+snake.getLenth(), hight/2, 40);
         }else if(gameState == Modes.GameStates.RUNING){
             border.drew(g2d);
@@ -106,12 +107,14 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             g2d.setColor(snakeColor);
 
             if(!snake.move(pressedKey, g2d)){
-                //timer.stop();
+                timer.stop();
+                repaint();
                 return;
             }
         }else if(gameState == Modes.GameStates.NOT_STARTED){
 
         }else if(gameState == Modes.GameStates.VICTORY){
+            g2d.setColor(textColor);
             g2d.drawString("YOU WON!\nYou score :"+snake.getLenth(), hight/2, 40);
         }
 
