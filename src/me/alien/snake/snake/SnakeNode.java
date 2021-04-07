@@ -2,6 +2,7 @@ package me.alien.snake.snake;
 
 import java.awt.*;
 
+import me.alien.snake.Border;
 import me.alien.snake.Game;
 
 public class SnakeNode {
@@ -15,7 +16,7 @@ public class SnakeNode {
         this.size=size;
         this.id=id;
         System.out.println("nodes left "+lenth+". This node has id "+id);
-        bodyPice=new Rectangle(0, 0, size, size);
+        bodyPice=new Rectangle(40, 40, size, size);
         if(lenth > 1){
             childNode = new SnakeNode(size, lenth-1, id+1);
         }
@@ -25,11 +26,7 @@ public class SnakeNode {
         //System.out.println("Moving node whit id "+id);
         int gameWidth = Game.getWidthA();
         int gameHight = Game.getHightA();
-        boolean outMaxX = x > (gameWidth-size);
-        boolean outMaxY = y > (gameHight-size);
-        boolean outMinX = x < 0;
-        boolean outMinY = y < 0;
-        if(outMaxX || outMaxY || outMinX || outMinY){
+        if(Game.border.intersect(bodyPice)){
             System.out.println("Invalid/eligel move trying to move node "+id+" out side of the map");
             return false;
         }

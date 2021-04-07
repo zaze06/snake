@@ -3,10 +3,9 @@ package me.alien.snake;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
-import me.alien.snake.snake.*;
 import me.alien.snake.snake.Appel;
 import me.alien.snake.snake.Snake;
-import me.alien.snake.util.KeyMode;
+import me.alien.snake.util.Modes;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +17,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
 
     private static final String VERSION = "dev.0.2";
+    public static Border border;
+    public static int gameState = Modes.GameStates.RUNING;
 
     private static int hight = 0;
     private int DELAY = 100;
@@ -32,7 +33,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     Color backGroundColor = new ColorUIResource(97, 142, 114);
     Color snakeColor = new ColorUIResource(67, 198, 50);
 
-    private int pressedKey = KeyMode.RIGHT;
+    private int pressedKey = Modes.Key.RIGHT;
 
     public static int getHightA(){return hight;}
     public static int getWidthA(){return width;}
@@ -42,6 +43,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
         width = getWidth();
+        border=new Border(width, hight);
         initTimer();
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -50,15 +52,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 Dimension size = component.getSize();
                 int width = (int) size.getWidth();
                 int height = (int) size.getHeight();
-                System.out.print("The size of the game was width:"+width+" height:"+hight);
+                //System.out.print("The size of the game was width:"+width+" height:"+hight);
                 if(width % 10 == 0){}else{
                     width=Math.round(width/10)*10;
                 }
                 if(height % 10 == 0){}else{
-                    height=Math.round(width/10)*10;
+                    height=Math.round(height/10)*10;
                 }
-                System.out.print(" Now it is width:"+width+" height:"+hight+"\n");
+                //System.out.print(" Now it is width:"+width+" height:"+hight+"\n");
                 component.setSize(size);
+                border.updateWalls(width, height);
             }
         });
     }
@@ -86,17 +89,31 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(backGroundColor);
-        g2d.fillRect(0, 0, width, hight);
-
-        appel.draw(g2d, appelColor);
-
-        g2d.setColor(snakeColor);
-
-        if(!snake.move(pressedKey, g2d)){
-            timer.stop();
-            return;
+        if(!(gameState == Modes.GameStates.DIED || gameState == Modes.GameStates.VICTORY)){
+            g2d.setColor(backGroundColor);
+            g2d.fillRect(0, 0, width, hight);
         }
+
+
+        if(gameState == Modes.GameStates.DIED){
+            g2d.drawString("You Died.\nYou score :"+snake.getLenth(), hight/2, 40);
+        }else if(gameState == Modes.GameStates.RUNING){
+            border.drew(g2d);
+
+            appel.draw(g2d, appelColor);
+
+            g2d.setColor(snakeColor);
+
+            if(!snake.move(pressedKey, g2d)){
+                timer.stop();
+                return;
+            }
+        }else if(gameState == Modes.GameStates.NOT_STARTED){
+
+        }else if(gameState == Modes.GameStates.VICTORY){
+            g2d.drawString("YOU WON!\nYou score :"+snake.getLenth(), hight/2, 40);
+        }
+
     }
 
     @Override
@@ -112,16 +129,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_UP){
-            pressedKey = KeyMode.UP;
+            pressedKey = Modes.Key.UP;
         }else
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            pressedKey = KeyMode.DOWN;
+            pressedKey = Modes.Key.DOWN;
         }else
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            pressedKey = KeyMode.LEFT;
+            pressedKey = Modes.Key.LEFT;
         }else
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            pressedKey = KeyMode.RIGHT;
+            pressedKey = Modes.Key.RIGHT;
         }
     }
 
