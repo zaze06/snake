@@ -30,7 +30,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private static Timer timer;
 
     Snake snake = new Snake(3,10);
-    Appel appel;
+    Appel appel = null;
 
     Color appelColor = new ColorUIResource(231, 42, 42);
     Color backGroundColor = new ColorUIResource(97, 142, 114);
@@ -46,9 +46,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
         width = getWidth();
-        int x = (int) (Math.random() * (width + 1));
-        int y = (int) (Math.random() * (hight + 1));
-        appel = new Appel(x, y);
         initTimer();
     }
 
@@ -67,6 +64,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private void doDrawing(Graphics g){
         hight = getHeight();
         width = getWidth();
+
+        if(appel == null){
+            int x = (int) (Math.random() * (width + 1));
+            int y = (int) (Math.random() * (hight + 1));
+            appel = new Appel(x, y);
+        }
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(backGroundColor);
