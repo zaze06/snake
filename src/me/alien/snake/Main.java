@@ -2,6 +2,9 @@ package me.alien.snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import me.alien.snake.*;
 
 public class Main extends JFrame {

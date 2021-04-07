@@ -9,10 +9,7 @@ import me.alien.snake.snake.Snake;
 import me.alien.snake.util.KeyMode;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
 
@@ -46,6 +43,24 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         hight=getHeight();
         width = getWidth();
         initTimer();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                final Component component = e.getComponent();
+                Dimension size = component.getSize();
+                int width = (int) size.getWidth();
+                int height = (int) size.getHeight();
+                System.out.print("The size of the game was width:"+width+" height:"+hight);
+                if(width % 10 == 0){}else{
+                    width=Math.round(width/10)*10;
+                }
+                if(height % 10 == 0){}else{
+                    height=Math.round(width/10)*10;
+                }
+                System.out.print(" Now it is width:"+width+" height:"+hight+"\n");
+                component.setSize(size);
+            }
+        });
     }
 
     private void initTimer() {
