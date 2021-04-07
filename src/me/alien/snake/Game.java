@@ -31,7 +31,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     Snake snake = new Snake(3,10);
     Appel appel;
+
     Color appelColor = new ColorUIResource(231, 42, 42);
+    Color backGroundColor = new ColorUIResource(97, 142, 114);
+    Color snakeColor = new ColorUIResource(67, 198, 50);
 
     private int pressedKey = KeyMode.RIGHT;
 
@@ -66,10 +69,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         width = getWidth();
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.fillRect(0, 0, width, hight);
-        g2d.setColor(new ColorUIResource(0, 200, 100));
+        g2d.setBackground(backGroundColor);
 
         appel.draw(g2d, appelColor);
+
+        g2d.setColor(snakeColor);
 
         if(!snake.move(pressedKey, g2d)){
             timer.stop();
