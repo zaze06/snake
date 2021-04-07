@@ -16,7 +16,13 @@ public class Snake {
         //this.size = size;
 
         for(int i = 0; i < lenth; i++){
-            
+            /*
+            if(i!=0){
+                body.add(new SnakeNode(size, body.get(i-1)));
+            }else{
+                body.add(new SnakeNode(size, null))
+            }
+            */
         }
     }
 
