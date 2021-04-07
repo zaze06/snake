@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
 import me.alien.*;
+import me.alien.snake.snake.Snake;
+import me.alien.snake.util.KeyMode;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +20,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
      */
     private static final long serialVersionUID = 1L;
 
-    private static final String VERSION = "dev.0.1.1";
+    private static final String VERSION = "dev.0.2";
 
     private static int hight = 0;
     private int DELAY = 100;
@@ -28,9 +30,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     Snake snake = new Snake(3,10);
 
+    private int pressedKey = KeyMode.RIGHT;
+
     public static int getHightA(){return hight;}
     public static int getWidthA(){return width;}
 
+    //the constructor
     public Game(){
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
@@ -54,9 +59,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         width = getWidth();
 
         Graphics2D g2d = (Graphics2D) g;
+        g2d.fillRect(0, 0, width, hight);
         g2d.setColor(new ColorUIResource(0, 200, 100));
         
-        snake.move();
+        if(!snake.move(pressedKey, g2d)){
+            timer.stop();
+            return;
+        }
     }
 
     @Override
@@ -71,7 +80,18 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if(e.getKeyCode() == KeyEvent.VK_UP){
+            pressedKey = KeyMode.UP;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            pressedKey = KeyMode.DOWN;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            pressedKey = KeyMode.LEFT;
+        }else
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            pressedKey = KeyMode.RIGHT;
+        }
     }
 
     @Override
