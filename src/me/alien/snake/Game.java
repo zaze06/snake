@@ -3,7 +3,7 @@ package me.alien.snake;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
-import me.alien.*;
+import me.alien.snake.snake.*;
 import me.alien.snake.snake.Appel;
 import me.alien.snake.snake.Snake;
 import me.alien.snake.util.KeyMode;
@@ -16,10 +16,9 @@ import java.awt.event.KeyListener;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
+
+
 
     private static final String VERSION = "dev.0.2";
 
@@ -30,7 +29,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private static Timer timer;
 
     Snake snake = new Snake(3,10);
-    Appel appel = null;
+    public static Appel appel = null;
 
     Color appelColor = new ColorUIResource(231, 42, 42);
     Color backGroundColor = new ColorUIResource(97, 142, 114);

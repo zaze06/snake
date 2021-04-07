@@ -22,13 +22,13 @@ public class Snake {
 
     public boolean move(int key, Graphics2D g2d){
         if(key == KeyMode.UP){
-            return head.move(head.getX(), head.getY()-head.getHeight(), g2d);
+            return head.move(head.getX(), head.getY()-head.getHeight(), g2d, true);
         }else if(key == KeyMode.DOWN){
-            return head.move(head.getX(), head.getY()+head.getHeight(), g2d);
+            return head.move(head.getX(), head.getY()+head.getHeight(), g2d, true);
         }else if(key == KeyMode.LEFT){
-            return head.move(head.getX()-head.getWidth(), head.getY(), g2d);
+            return head.move(head.getX()-head.getWidth(), head.getY(), g2d, true);
         }else if(key == KeyMode.RIGHT){
-            return head.move(head.getX()+head.getWidth(), head.getY(), g2d);
+            return head.move(head.getX()+head.getWidth(), head.getY(), g2d, true);
         }
         System.out.println("Invalid key got "+key+" Expected betwen 1 to 4");
         return false;

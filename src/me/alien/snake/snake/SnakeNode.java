@@ -21,7 +21,7 @@ public class SnakeNode {
         }
     }
 
-    public boolean move(int x, int y, Graphics2D g2d){
+    public boolean move(int x, int y, Graphics2D g2d, boolean isHead){
         //System.out.println("Moving node whit id "+id);
         int gameWidth = Game.getWidthA();
         int gameHight = Game.getHightA();
@@ -36,8 +36,14 @@ public class SnakeNode {
         int x1 = bodyPice.x, y1=bodyPice.y;
         bodyPice.setLocation(x, y);
         g2d.fill(bodyPice);
+        if(isHead){
+            if(bodyPice.intersects(Game.appel.getAppel())){
+                Game.appel.newAppel();
+
+            }
+        }
         if(childNode!=null){
-            childNode.move(x1, y1, g2d);
+            childNode.move(x1, y1, g2d, false);
         }
         return true;
     }

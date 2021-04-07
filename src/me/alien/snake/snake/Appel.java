@@ -20,4 +20,8 @@ public class Appel {
     public Rectangle getAppel() {
         return appel;
     }
+
+    public void newAppel(){
+        appel.setLocation(0,0);
+    }
 }
