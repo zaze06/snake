@@ -16,4 +16,8 @@ public class Appel {
         g2d.setColor(appelColor);
         g2d.fill(appel);
     }
+
+    public Rectangle getAppel() {
+        return appel;
+    }
 }
