@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
 import me.alien.*;
+import me.alien.snake.snake.Appel;
 import me.alien.snake.snake.Snake;
 import me.alien.snake.util.KeyMode;
 
@@ -29,6 +30,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private static Timer timer;
 
     Snake snake = new Snake(3,10);
+    Appel appel;
+    Color appelColor = new ColorUIResource(231, 42, 42);
 
     private int pressedKey = KeyMode.RIGHT;
 
@@ -39,6 +42,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public Game(){
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
+        width = getWidth();
+        int x = (int) (Math.random() * (width + 1));
+        int y = (int) (Math.random() * (hight + 1));
+        appel = new Appel(x, y);
         initTimer();
     }
 
@@ -61,7 +68,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.fillRect(0, 0, width, hight);
         g2d.setColor(new ColorUIResource(0, 200, 100));
-        
+
+        appel.draw(g2d, appelColor);
+
         if(!snake.move(pressedKey, g2d)){
             timer.stop();
             return;

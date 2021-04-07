@@ -6,7 +6,7 @@ import me.alien.snake.*;
 
 public class Main extends JFrame {
 
-    static int hight = 270;
+    static int hight = 268;
     static int width = 290;
 
     public Main(){
