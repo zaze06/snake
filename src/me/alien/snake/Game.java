@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
 import me.alien.*;
+import me.alien.snake.snake.Snake;
+import me.alien.snake.util.KeyMode;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -56,7 +58,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new ColorUIResource(0, 200, 100));
         
-        snake.move();
+        snake.move(KeyMode.UP);
     }
 
     @Override

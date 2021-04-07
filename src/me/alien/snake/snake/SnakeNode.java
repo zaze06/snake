@@ -22,4 +22,9 @@ public class SnakeNode {
         childNode.move(x1, y1);
     }
 
+    public int getHeight(){return bodyPice.height;}
+    public int getWidth(){return bodyPice.width;}
+
+    public int getX(){return bodyPice.x;}
+    public int getY(){return bodyPice.y;}
 }
