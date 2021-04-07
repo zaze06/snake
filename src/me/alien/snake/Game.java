@@ -69,7 +69,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         width = getWidth();
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setBackground(backGroundColor);
+        g2d.setColor(backGroundColor);
+        g2d.fillRect(0, 0, width, hight);
 
         appel.draw(g2d, appelColor);
 
