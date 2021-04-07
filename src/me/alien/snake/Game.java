@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
 import me.alien.*;
+import me.alien.snake.snake.Appel;
+import me.alien.snake.snake.Snake;
+import me.alien.snake.util.KeyMode;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,8 +32,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     Snake snake = new Snake(3,10);
     Appel appel;
     Color appelColor = new ColorUIResource(231, 42, 42);
-
-    private int pressedKey = KeyMode.RIGHT;
 
     private int pressedKey = KeyMode.RIGHT;
 
