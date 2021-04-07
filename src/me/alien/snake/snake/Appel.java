@@ -22,6 +22,8 @@ public class Appel {
     }
 
     public void newAppel(){
-        appel.setLocation(0,0);
+        int x = (int) (Math.random() * (Game.getWidthA() + 1));
+        int y = (int) (Math.random() * (Game.getHightA() + 1));
+        appel.setLocation(x, y);
     }
 }

@@ -16,7 +16,7 @@ public class SnakeNode {
         this.id=id;
         System.out.println("nodes left "+lenth+". This node has id "+id);
         bodyPice=new Rectangle(0, 0, size, size);
-        if(lenth > 0){
+        if(lenth > 1){
             childNode = new SnakeNode(size, lenth-1, id+1);
         }
     }
@@ -29,17 +29,18 @@ public class SnakeNode {
         boolean outMaxY = y > (gameHight-size);
         boolean outMinX = x < 0;
         boolean outMinY = y < 0;
-        if(outMaxX|| outMaxY || outMinX || outMinY){
+        if(outMaxX || outMaxY || outMinX || outMinY){
             System.out.println("Invalid/eligel move trying to move node "+id+" out side of the map");
             return false;
         }
         int x1 = bodyPice.x, y1=bodyPice.y;
         bodyPice.setLocation(x, y);
         g2d.fill(bodyPice);
+
         if(isHead){
             if(bodyPice.intersects(Game.appel.getAppel())){
                 Game.appel.newAppel();
-
+                Game.snake.add();
             }
         }
         if(childNode!=null){
@@ -53,4 +54,16 @@ public class SnakeNode {
 
     public int getX(){return bodyPice.x;}
     public int getY(){return bodyPice.y;}
+
+    public int getID() {
+        return id;
+    }
+
+    public void add() {
+        if (childNode != null) {
+            childNode.add();
+        } else {
+            childNode = new SnakeNode(size, 1, id+1);
+        }
+    }
 }

@@ -34,4 +34,8 @@ public class Snake {
         return false;
     }
 
+    public void add(){
+        head.add();
+    }
+
 }

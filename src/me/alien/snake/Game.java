@@ -28,7 +28,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     private static Timer timer;
 
-    Snake snake = new Snake(3,10);
+    public static Snake snake = new Snake(3,10);
     public static Appel appel = null;
 
     Color appelColor = new ColorUIResource(231, 42, 42);
