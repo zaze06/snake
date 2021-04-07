@@ -1,30 +1,37 @@
 package me.alien.snake.snake;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
+
+import me.alien.snake.util.KeyMode;
 
 public class Snake {
 
     private int size;
     private int lenth;
 
-    ArrayList<SnakeNode> body = new ArrayList<SnakeNode>();
+    SnakeNode head;
 
     public Snake(int lenth, int size) {
         this.lenth = lenth;
         //this.size = size;
 
-        for(int i = 0; i < lenth; i++){
-            /*if(i != 0){
-                body.add(new SnakeNode(size, body.get(i-1)));
-            }
-            else{
-                body.add(new SnakeNode(size, null));
-            }*/
-        }
+        head = new SnakeNode(size, lenth, 0);
     }
 
-    public void move(){
-
+    public boolean move(int key, Graphics2D g2d){
+        if(key == KeyMode.UP){
+            return head.move(head.getX(), head.getY()-head.getHeight(), g2d);
+        }else if(key == KeyMode.DOWN){
+            return head.move(head.getX(), head.getY()+head.getHeight(), g2d);
+        }else if(key == KeyMode.LEFT){
+            return head.move(head.getX()-head.getWidth(), head.getY(), g2d);
+        }else if(key == KeyMode.RIGHT){
+            return head.move(head.getX()+head.getWidth(), head.getY(), g2d);
+        }
+        System.out.println("Invalid key got "+key+" Expected betwen 1 to 4");
+        return false;
     }
 
 }
