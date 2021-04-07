@@ -35,6 +35,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public static int getHightA(){return hight;}
     public static int getWidthA(){return width;}
 
+    //the constructor
     public Game(){
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
