@@ -11,13 +11,14 @@ public class Main extends JFrame {
 
     static int hight = 268;
     static int width = 290;
+    static int DELAY = 100;
 
     public Main(){
         initUI();
     }
 
     private void initUI(){
-        Game game = new Game();
+        Game game = new Game(DELAY);
         add(game);
         addKeyListener(game);
 
@@ -26,9 +27,16 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setMinimumSize(getSize());
+        setMaximumSize(getSize());
     }
 
     public static void main(String[] args){
+        if(args.length>0){
+            if(args[0].startsWith("-debug")){
+                DELAY = 500;
+                Game.showID = true;
+            }
+        }
         EventQueue.invokeLater((new Runnable() {
             @Override
             public void run() {

@@ -17,8 +17,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
 
     private static final String VERSION = "dev.0.2";
-    public static Border border;
+    public static Border border = null;
     public static int gameState = Modes.GameStates.RUNING;
+    public static boolean showID;
 
     private static int hight = 0;
     private int DELAY = 100;
@@ -29,10 +30,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public static Snake snake = new Snake(3,10);
     public static Appel appel = null;
 
-    Color appelColor = new ColorUIResource(231, 42, 42);
-    Color backGroundColor = new ColorUIResource(97, 142, 114);
-    Color snakeColor = new ColorUIResource(67, 198, 50);
-    Color textColor = new ColorUIResource(23, 127, 106);
+    public static final Color appelColor = new ColorUIResource(231, 42, 42);
+    public static final Color backGroundColor = new ColorUIResource(97, 142, 114);
+    public static final Color snakeColor = new ColorUIResource(67, 198, 50);
+    public static final Color textColor = new ColorUIResource(23, 127, 106);
 
     private int pressedKey = Modes.Key.RIGHT;
 
@@ -40,15 +41,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public static int getWidthA(){return width;}
 
     //the constructor
-    public Game(){
+    public Game(int DELAY){
+        this.DELAY = DELAY;
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
         width = getWidth();
-        border=new Border(width, hight);
         initTimer();
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+
                 final Component component = e.getComponent();
                 Dimension size = component.getSize();
                 int width = (int) size.getWidth();
@@ -62,6 +64,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 }
                 //System.out.print(" Now it is width:"+width+" height:"+hight+"\n");
                 component.setSize(size);
+                if(border == null){
+                    border=new Border(width, height);
+                }
                 border.updateWalls(width, height);
             }
         });
@@ -79,7 +84,17 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         doDrawing(g);
     }
 
+    boolean setOrigo = false;
+
     private void doDrawing(Graphics g){
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        if(!setOrigo){
+            //g2d.scale(1, -1);
+            g2d.translate(5, 5);
+        }
+
         hight = getHeight();
         width = getWidth();
 
@@ -89,16 +104,22 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             appel = new Appel(x, y);
         }
 
-        Graphics2D g2d = (Graphics2D) g;
         if(!(gameState == Modes.GameStates.DIED || gameState == Modes.GameStates.VICTORY)){
             g2d.setColor(backGroundColor);
-            g2d.fillRect(0, 0, width, hight);
+            g2d.fillRect(-5, -5, width, hight);
         }
 
 
         if(gameState == Modes.GameStates.DIED){
             g2d.setColor(textColor);
-            g2d.drawString("You Died.\nYou score :"+snake.getLenth(), hight/2, 40);
+            g2d.drawString("You Died.\nYou score: "+snake.getLenth(), hight/2, 40);
+            border.drew(g2d);
+
+            appel.draw(g2d, appelColor);
+
+            g2d.setColor(snakeColor);
+
+            snake.draw(g2d);
         }else if(gameState == Modes.GameStates.RUNING){
             border.drew(g2d);
 
@@ -106,7 +127,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
             g2d.setColor(snakeColor);
 
-            if(!snake.move(pressedKey, g2d)){
+            if(!snake.move(pressedKey, g2d, showID)){
                 timer.stop();
                 repaint();
                 return;
@@ -115,7 +136,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
         }else if(gameState == Modes.GameStates.VICTORY){
             g2d.setColor(textColor);
-            g2d.drawString("YOU WON!\nYou score :"+snake.getLenth(), hight/2, 40);
+            g2d.drawString("YOU WON!\nYou score: "+snake.getLenth(), hight/2, 40);
         }
 
     }
@@ -132,17 +153,24 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_UP){
+        final int keyCode = e.getKeyCode();
+        if(keyCode == KeyEvent.VK_UP){
             pressedKey = Modes.Key.UP;
         }else
-        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+        if(keyCode == KeyEvent.VK_DOWN){
             pressedKey = Modes.Key.DOWN;
         }else
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+        if(keyCode == KeyEvent.VK_LEFT){
             pressedKey = Modes.Key.LEFT;
         }else
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+        if(keyCode == KeyEvent.VK_RIGHT){
             pressedKey = Modes.Key.RIGHT;
+        }else
+        if(keyCode == KeyEvent.VK_PLUS){
+            snake.add();
+        }else
+        if(keyCode == KeyEvent.VK_MINUS){
+            snake.add();
         }
     }
 

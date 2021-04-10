@@ -6,8 +6,11 @@ import java.awt.*;
 
 public class Wall extends Rectangle {
     int mode;
+    static int count = 0;
     public Wall(int x, int y, int width, int height, int mode){
         super(x, y, width, height);
+        //System.out.println("Cnt = "+count+"(x,y,w,h)=("+x+","+y+","+width+","+height+")");
+        count++;
     }
 
     public boolean checkIntesection(Rectangle r){

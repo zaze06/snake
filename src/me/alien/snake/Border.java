@@ -16,17 +16,20 @@ public class Border {
     };
 
     public Border(int width, int height){
-        walls.add(new Wall(0, 0, width, 5, mode));
-        walls.add(new Wall(0, 0, 5, height, mode));
-        walls.add(new Wall(0, height-5, width, 5, mode));
-        walls.add(new Wall(width-5, 0, 5, height, mode));
+        //System.out.println("(w,h) ("+width+","+height+")");
+        walls.add(new Wall(-5, -5, width+5, 5, mode));
+        walls.add(new Wall(-5, 0, 5, height, mode));
+        walls.add(new Wall(0, height-10, width, 5, mode));
+        walls.add(new Wall(width-10, 0, 5, height, mode));
     }
 
     public void drew(Graphics2D g2d){
         g2d.setColor(wallColor[mode]);
         for(int i = 0; i < walls.size(); i++){
-            g2d.draw(walls.get(i));
+            g2d.fill(walls.get(i));
+            //System.out.print(" num: "+i+" : x:y "+walls.get(i).x+" "+walls.get(i).y);
         }
+        //System.out.println("");
     }
 
     public boolean intersect(Rectangle r){
@@ -38,9 +41,9 @@ public class Border {
     }
 
     public void updateWalls(int width, int height){
-        walls.get(0).setSize(0, 0, width, 5);
-        walls.get(0).setSize(0, 0, 5, height);
-        walls.get(0).setSize(0, height-5, width, 5);
-        walls.get(0).setSize(width-5, 0, 5, height);
+        /*walls.get(0).setSize(-5, -5, width+5, 5);
+        walls.get(0).setSize(-5, 0, 5, height);
+        walls.get(0).setSize(0, height-10, width, 5);
+        walls.get(0).setSize(width-10, 0, 5, height);*/
     }
 }
