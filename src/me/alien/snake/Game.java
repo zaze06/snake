@@ -5,7 +5,8 @@ import javax.swing.plaf.ColorUIResource;
 
 import me.alien.snake.snake.Appel;
 import me.alien.snake.snake.Snake;
-import me.alien.snake.util.Modes;
+import me.alien.snake.util.Data;
+import me.alien.snake.util.ImgHandler;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     private static final String VERSION = "dev.0.2";
     public static Border border = null;
-    public static int gameState = Modes.GameStates.RUNING;
+    public static int gameState = Data.GameStates.RUNING;
     public static boolean showID;
 
     private static int hight = 0;
@@ -35,7 +36,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public static final Color snakeColor = new ColorUIResource(67, 198, 50);
     public static final Color textColor = new ColorUIResource(23, 127, 106);
 
-    private int pressedKey = Modes.Key.RIGHT;
+    private int pressedKey = Data.Key.RIGHT;
+
+    public static ImgHandler imgHandler;
 
     public static int getHightA(){return hight;}
     public static int getWidthA(){return width;}
@@ -46,6 +49,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         System.out.println("Starting snake by Alien (c) 2021 V."+VERSION);
         hight=getHeight();
         width = getWidth();
+        imgHandler=new ImgHandler();
         initTimer();
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -93,6 +97,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         if(!setOrigo){
             //g2d.scale(1, -1);
             g2d.translate(5, 5);
+            //setOrigo=true;
         }
 
         hight = getHeight();
@@ -104,13 +109,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             appel = new Appel(x, y);
         }
 
-        if(!(gameState == Modes.GameStates.DIED || gameState == Modes.GameStates.VICTORY)){
+        if(!(gameState == Data.GameStates.DIED || gameState == Data.GameStates.VICTORY)){
             g2d.setColor(backGroundColor);
             g2d.fillRect(-5, -5, width, hight);
         }
 
 
-        if(gameState == Modes.GameStates.DIED){
+        if(gameState == Data.GameStates.DIED){
             g2d.setColor(textColor);
             g2d.drawString("You Died.\nYou score: "+snake.getLenth(), hight/2, 40);
             border.drew(g2d);
@@ -120,7 +125,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             g2d.setColor(snakeColor);
 
             snake.draw(g2d);
-        }else if(gameState == Modes.GameStates.RUNING){
+        }else if(gameState == Data.GameStates.RUNING){
             border.drew(g2d);
 
             appel.draw(g2d, appelColor);
@@ -132,9 +137,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
                 repaint();
                 return;
             }
-        }else if(gameState == Modes.GameStates.NOT_STARTED){
+        }else if(gameState == Data.GameStates.NOT_STARTED){
 
-        }else if(gameState == Modes.GameStates.VICTORY){
+        }else if(gameState == Data.GameStates.VICTORY){
             g2d.setColor(textColor);
             g2d.drawString("YOU WON!\nYou score: "+snake.getLenth(), hight/2, 40);
         }
@@ -155,16 +160,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         final int keyCode = e.getKeyCode();
         if(keyCode == KeyEvent.VK_UP){
-            pressedKey = Modes.Key.UP;
+            pressedKey = Data.Key.UP;
         }else
         if(keyCode == KeyEvent.VK_DOWN){
-            pressedKey = Modes.Key.DOWN;
+            pressedKey = Data.Key.DOWN;
         }else
         if(keyCode == KeyEvent.VK_LEFT){
-            pressedKey = Modes.Key.LEFT;
+            pressedKey = Data.Key.LEFT;
         }else
         if(keyCode == KeyEvent.VK_RIGHT){
-            pressedKey = Modes.Key.RIGHT;
+            pressedKey = Data.Key.RIGHT;
         }else
         if(keyCode == KeyEvent.VK_PLUS){
             snake.add();

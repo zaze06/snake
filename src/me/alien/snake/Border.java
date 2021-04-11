@@ -1,6 +1,6 @@
 package me.alien.snake;
 
-import me.alien.snake.util.Modes;
+import me.alien.snake.util.Data;
 import me.alien.snake.util.Wall;
 
 import javax.swing.plaf.ColorUIResource;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Border {
-    int mode = Modes.Walls.DENGER;
+    int mode = Data.Walls.DENGER;
     ArrayList<Wall> walls = new ArrayList<Wall>();
     Color[] wallColor = {
             new ColorUIResource(102, 5, 5),

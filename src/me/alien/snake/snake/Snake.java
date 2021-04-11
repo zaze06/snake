@@ -3,7 +3,7 @@ package me.alien.snake.snake;
 import java.awt.Graphics2D;
 
 import me.alien.snake.Game;
-import me.alien.snake.util.Modes;
+import me.alien.snake.util.Data;
 
 public class Snake {
 
@@ -20,14 +20,14 @@ public class Snake {
     }
 
     public boolean move(int key, Graphics2D g2d, boolean showID){
-        if(key == Modes.Key.UP){
-            return head.move(head.getX(), head.getY()-head.getHeight(), g2d, true, showID);
-        }else if(key == Modes.Key.DOWN){
-            return head.move(head.getX(), head.getY()+head.getHeight(), g2d, true, showID);
-        }else if(key == Modes.Key.LEFT){
-            return head.move(head.getX()-head.getWidth(), head.getY(), g2d, true, showID);
-        }else if(key == Modes.Key.RIGHT){
-            return head.move(head.getX()+head.getWidth(), head.getY(), g2d, true, showID);
+        if(key == Data.Key.UP){
+            return head.move(head.getX(), head.getY()-head.getHeight(), g2d, key, true, showID);
+        }else if(key == Data.Key.DOWN){
+            return head.move(head.getX(), head.getY()+head.getHeight(), g2d, key, true, showID);
+        }else if(key == Data.Key.LEFT){
+            return head.move(head.getX()-head.getWidth(), head.getY(), g2d, key, true, showID);
+        }else if(key == Data.Key.RIGHT){
+            return head.move(head.getX()+head.getWidth(), head.getY(), g2d, key, true, showID);
         }
         System.out.println("Invalid key got "+key+" Expected betwen 1 to 4");
         return false;
@@ -37,7 +37,7 @@ public class Snake {
         lenth++;
         head.add();
         if(lenth==((Game.getHightA()/10)*(Game.getWidthA()/10))){
-            Game.gameState= Modes.GameStates.VICTORY;
+            Game.gameState= Data.GameStates.VICTORY;
         }
     }
 

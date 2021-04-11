@@ -16,8 +16,8 @@ public class Wall extends Rectangle {
     public boolean checkIntesection(Rectangle r){
         final boolean intersect = this.intersects(r);
         if(intersect){
-            if(mode == Modes.Walls.DENGER){
-                Game.gameState=Modes.GameStates.DIED;
+            if(mode == Data.Walls.DENGER){
+                Game.gameState= Data.GameStates.DIED;
             }
         }
         return  intersect;

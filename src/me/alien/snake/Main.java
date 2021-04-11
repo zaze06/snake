@@ -32,10 +32,16 @@ public class Main extends JFrame {
 
     public static void main(String[] args){
         if(args.length>0){
-            if(args[0].startsWith("-debug")){
+            System.out.println(args[0]);
+            if(args[0].equals("-debug")){
                 DELAY = 500;
                 Game.showID = true;
+            }else if(args[0].equals("-debug:noid")){
+                Game.showID=false;
+                DELAY=500;
             }
+        }else{
+            Game.showID=false;
         }
         EventQueue.invokeLater((new Runnable() {
             @Override
