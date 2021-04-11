@@ -57,34 +57,34 @@ public class SnakeNode {
 
         bodyPice.setLocation(x, y);
 
-        //if(imgDir!=-1){
-        if(childNode!=null){
-            System.out.println("id:"+id+", (childNode.dir!=this.dir)="+(childNode.dir!=this.dir));
-        }
-
-        System.out.println("id:"+id+", dir="+dir+", oldDir="+oldDir);
-        String pice = Game.imgHandler.STRAIGHT;
-        int imgDir = this.dir;
-        if(childNode==null){
-            pice = Game.imgHandler.TAIL;
-        }else if(isHead){
-            pice = Game.imgHandler.HEAD;
-        }else if(oldDir!=this.dir){
-
-            boolean down = (this.dir==Data.Key.DOWN);
-            boolean left = (this.dir==Data.Key.LEFT);
-            pice = Game.imgHandler.CORNER;
-
-            if(down && left){
-                imgDir=1;
-            }else if(!down && left){
-                imgDir=2;
-            }else if(down){
-                imgDir=0;
-            }else{
-                imgDir=3;
+        if(false){
+            if(childNode!=null){
+                System.out.println("id:"+id+", (childNode.dir!=this.dir)="+(childNode.dir!=this.dir));
             }
-        }
+
+            System.out.println("id:"+id+", dir="+dir+", oldDir="+oldDir);
+            String pice = Game.imgHandler.STRAIGHT;
+            int imgDir = this.dir;
+            if(childNode==null){
+                pice = Game.imgHandler.TAIL;
+            }else if(isHead){
+                pice = Game.imgHandler.HEAD;
+            }else if(oldDir!=this.dir){
+
+                boolean down = (this.dir==Data.Key.DOWN);
+                boolean left = (this.dir==Data.Key.LEFT);
+                pice = Game.imgHandler.CORNER;
+
+                if(down && left){
+                    imgDir=1;
+                }else if(!down && left){
+                    imgDir=2;
+                }else if(down){
+                    imgDir=0;
+                }else{
+                    imgDir=3;
+                }
+            }
 
             img = Game.imgHandler.getImg(imgDir, pice);
 
@@ -94,7 +94,7 @@ public class SnakeNode {
             g2d.drawImage(img, null, x, y);
 
 
-        //}else g2d.fill(bodyPice);
+        }else g2d.fill(bodyPice);
         if(showID){
             g2d.setColor(Game.textColor);
             drawString(g2d,""+id, x, y-5, 10);
