@@ -19,7 +19,15 @@ public class Snake {
         head = new SnakeNode(size, lenth, 0);
     }
 
+    public SnakeNode getHead() {
+        return head;
+    }
+
     public boolean move(int key, Graphics2D g2d, boolean showID){
+        if(lenth<=2){
+            Game.gameState=Data.GameStates.DIED;
+            return false;
+        }
         if(key == Data.Key.UP){
             return head.move(head.getX(), head.getY()-head.getHeight(), g2d, key, true, showID);
         }else if(key == Data.Key.DOWN){
@@ -39,6 +47,10 @@ public class Snake {
         if(lenth==((Game.getHightA()/10)*(Game.getWidthA()/10))){
             Game.gameState= Data.GameStates.VICTORY;
         }
+    }
+    public void remove(){
+        lenth--;
+        head.remove();
     }
 
     public void draw(Graphics2D g2d){

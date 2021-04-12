@@ -7,13 +7,15 @@ import java.awt.image.BufferedImageOp;
 
 import me.alien.snake.Game;
 import me.alien.snake.util.Data;
+import sun.java2d.loops.ProcessPath;
+
+import javax.swing.plaf.ColorUIResource;
 
 public class SnakeNode {
-
     SnakeNode childNode=null;
     private int size;
     private int id;
-    private Rectangle bodyPice;
+    public Rectangle bodyPice;
     private Robot robot;
     private int oldDir;
     private int dir;
@@ -57,7 +59,7 @@ public class SnakeNode {
 
         bodyPice.setLocation(x, y);
 
-        if(false){
+        if(true){
             if(childNode!=null){
                 System.out.println("id:"+id+", (childNode.dir!=this.dir)="+(childNode.dir!=this.dir));
             }
@@ -94,7 +96,12 @@ public class SnakeNode {
             g2d.drawImage(img, null, x, y);
 
 
-        }else g2d.fill(bodyPice);
+        }else if(isHead) {
+            g2d.setColor(new ColorUIResource(40, 118, 29));
+            g2d.fill(bodyPice);
+            g2d.setColor(Game.snakeColor);
+        } else g2d.fill(bodyPice);
+
         if(showID){
             g2d.setColor(Game.textColor);
             drawString(g2d,""+id, x, y-5, 10);
@@ -187,6 +194,18 @@ public class SnakeNode {
             childNode.add();
         } else {
             childNode = new SnakeNode(size, 1, id+1);
+            //childNode.childNode = new SnakeNode(size, 1, id+2);
         }
+    }
+
+    public boolean remove() {
+        if(childNode == null){
+            return false;
+        }else{
+            if(!childNode.remove()){
+                childNode = null;
+            }
+        }
+        return true;
     }
 }

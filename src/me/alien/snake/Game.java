@@ -17,18 +17,21 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
 
 
-    private static final String VERSION = "dev.0.2";
+    private static final String VERSION = "dev.1.4";
     public static Border border = null;
     public static int gameState = Data.GameStates.RUNING;
     public static boolean showID;
 
     private static int hight = 0;
+    private final Ai ai;
     private int DELAY = 100;
     private static int width;
+    public static int energyPerBodyPice = 15;
+    public static int timeSensApple = energyPerBodyPice;
 
     private static Timer timer;
 
-    public static Snake snake = new Snake(3,10);
+    public static Snake snake = new Snake(6,10);
     public static Appel appel = null;
 
     public static final Color appelColor = new ColorUIResource(231, 42, 42);
@@ -50,6 +53,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         hight=getHeight();
         width = getWidth();
         imgHandler=new ImgHandler();
+        ai=new Ai();
+        ai.start();
         initTimer();
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -106,6 +111,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         if(appel == null){
             int x = (int) (Math.random() * (width + 1));
             int y = (int) (Math.random() * (hight + 1));
+            while(!(((int)Math.ceil(Math.hypot((x - snake.getHead().bodyPice.x), (y - snake.getHead().bodyPice.y))))<snake.getLenth()+6)){
+                x = (int) (Math.random() * (width + 1));
+                y = (int) (Math.random() * (hight + 1));
+            }
             appel = new Appel(x, y);
         }
 
@@ -143,7 +152,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             g2d.setColor(textColor);
             g2d.drawString("YOU WON!\nYou score: "+snake.getLenth(), hight/2, 40);
         }
-
+        /*timeSensApple--;
+        if(timeSensApple<=0){
+            snake.remove();
+            timeSensApple=energyPerBodyPice;
+        }*/
     }
 
     @Override
